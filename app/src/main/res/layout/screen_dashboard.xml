@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fos="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SlidingPaneLayout
+        android:id="@+id/layout_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- The navigation drawer -->
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_menu_background"
+            >
+
+            <ListView
+                android:id="@+id/listview_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:choiceMode="singleChoice"
+                android:paddingTop="60dip"
+                style="@style/style_list" />
+
+            <View android:id="@+id/connectingLine"
+                android:layout_width="3dip"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+
+        <!-- The Root Layout -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- Navigation Layout -->
+
+            <FrameLayout
+                android:id="@+id/fragment_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </FrameLayout>
+
+            <!-- Fragment Content -->
+
+            <FrameLayout
+                android:id="@+id/fragment_content"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </FrameLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.SlidingPaneLayout>
+
+</LinearLayout>

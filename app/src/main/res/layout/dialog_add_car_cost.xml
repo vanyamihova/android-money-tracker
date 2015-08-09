@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mfg="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    android:orientation="vertical" >
+
+    <com.megaflashgames.budgethelper.ui.view.FTextView
+		android:id="@+id/tv_textInDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        mfg:font="@string/font_mainLight" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_cost"
+        android:inputType="number"
+        android:hint="Cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/et_kilometers"
+        android:inputType="number"
+        android:hint="Kilometers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/et_date"
+        android:inputType="number"
+        android:hint="Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal"
+	    android:weightSum="2" >
+        <com.megaflashgames.budgethelper.ui.view.FButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"
+            android:id="@+id/btn_finishDialog"
+            android:layout_alignParentBottom="true"
+            android:text="@string/textNo"
+            mfg:font="@string/font_mainLight"
+            android:layout_weight="1"/>
+
+        <com.megaflashgames.budgethelper.ui.view.FButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"
+            android:id="@+id/btn_actionDialog"
+            android:layout_alignParentBottom="true"
+            android:text="@string/textYes"
+            mfg:font="@string/font_mainLight"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

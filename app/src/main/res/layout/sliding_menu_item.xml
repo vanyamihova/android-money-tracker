@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mfg="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="7dip"
+    android:paddingTop="3dip">
+
+    <LinearLayout
+        android:id="@+id/container_menuItem"
+        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="3dip">
+
+        <!-- ICON -->
+        <com.megaflashgames.budgethelper.ui.view.FTextView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="30sp"
+            android:textColor="@color/color_menu_text_color"
+            mfg:font="@string/font_icons" />
+
+        <!-- TEXT -->
+        <com.megaflashgames.budgethelper.ui.view.FTextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="15sp"
+            android:textColor="@color/color_menu_text_color"
+            mfg:font="@string/font_mainLight" />
+
+    </LinearLayout>
+
+</RelativeLayout>

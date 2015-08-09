@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorGrey">#959595</color>
+
+    <color name="background_helper">#7b000000</color>
+
+    <color name="color_menu_item_border">#2c2c2c</color>
+    <color name="color_menu_background">#454545</color>
+    <color name="color_menu_text_color">#b52c2c2c</color>
+
+    <!-- RAINBOW -->
+    <color name="color_1">#f5b754</color>
+    <color name="color_2">#e77946</color>
+    <color name="color_3">#e05f49</color>
+    <color name="color_4">#d84a7c</color>
+    <color name="color_5">#9b5daa</color>
+    <color name="color_6">#6c4ba2</color>
+    <color name="color_7">#3e63b1</color>
+    <color name="color_8">#009ac3</color>
+    <color name="color_9">#087d9e</color>
+    <color name="color_10">#61a252</color>
+
+    <color name="g_plus">#d73d27</color>
+    <color name="facebook">#004088</color>
+    <color name="green">#0e4d01</color>
+
+</resources>

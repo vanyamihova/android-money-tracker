@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mfg="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- CENTER OF VIEW -->
+    <View
+        android:id="@+id/centerView"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@android:color/transparent"
+        android:layout_centerInParent="true"/>
+
+    <!-- BACKGROUND -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop" />
+
+    <!-- LOGO -->
+    <LinearLayout
+        android:id="@+id/logoContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/centerView"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_helper"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp">
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="180dp"
+            android:layout_height="75dp"
+            android:src="@drawable/logo_title"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_below="@id/centerView"
+        android:padding="5dip"
+        android:layout_alignLeft="@id/logoContainer"
+        android:layout_alignRight="@id/logoContainer">
+
+        <LinearLayout
+            android:id="@+id/helperContainer"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:minWidth="50dip"
+            android:visibility="invisible"
+            android:elevation="5dip"
+            android:background="@drawable/background_helper" />
+
+        <!-- HELPER SIGN CONTAINER -->
+        <LinearLayout
+            android:id="@+id/helperSignContainer"
+            android:orientation="horizontal"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:visibility="gone"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:elevation="7dip" />
+
+
+        <com.megaflashgames.budgethelper.ui.view.FTextView
+            android:id="@+id/arrowRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dip"
+            android:visibility="gone"
+            android:elevation="6dip"
+            android:text="@string/icon_arrow_right"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            mfg:font="@string/font_icons"/>
+
+        <com.megaflashgames.budgethelper.ui.view.FTextView
+            android:id="@+id/textSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/arrowRight"
+            android:paddingRight="15dip"
+            android:visibility="gone"
+            android:elevation="6dip"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            mfg:font="@string/font_mainLight"/>
+
+        <!-- G PLUS BUTTON -->
+        <LinearLayout
+            android:id="@+id/gPlusContainer"
+            android:orientation="horizontal"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentLeft="true"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:elevation="5dip"
+            android:background="@drawable/background_helper">
+            <com.megaflashgames.budgethelper.ui.view.FTextView
+                android:id="@+id/gPlusSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="@string/tagSign"
+                android:text="@string/icon_google_plus"
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
+                mfg:font="@string/font_icons"/>
+        </LinearLayout>
+
+        <!-- GENERAL BUTTON-->
+        <LinearLayout
+            android:id="@+id/generalContainer"
+            android:orientation="horizontal"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:elevation="5dip"
+            android:background="@drawable/background_helper">
+            <com.megaflashgames.budgethelper.ui.view.FTextView
+                android:id="@+id/generalSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="@string/tagSign"
+                android:text="@string/icon_budget"
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
+                mfg:font="@string/font_icons"/>
+        </LinearLayout>
+
+        <!-- FACEBOOK BUTTON -->
+        <LinearLayout
+            android:id="@+id/facebookContainer"
+            android:orientation="horizontal"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:elevation="5dip"
+            android:background="@drawable/background_helper">
+            <com.megaflashgames.budgethelper.ui.view.FTextView
+                android:id="@+id/facebookSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="@string/tagSign"
+                android:text="@string/icon_facebook"
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
+                mfg:font="@string/font_icons"/>
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

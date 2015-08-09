@@ -1,0 +1,12 @@
+
+- add GPS tracker and research nearBy places. Get all gas stations. Create listener that If GPS is
+turned On and receive coordinates which are on some gas station - push local notification to
+write down this cost.
+
+- add home spent money: rent, energy, water and etc.
+
+- create income view
+
+- create statistic for spent money
+
+- set transitions between views

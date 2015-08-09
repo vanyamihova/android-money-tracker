@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">BudgetHelper</string>
+    
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="textNo">No</string>
+    <string name="textYes">Yes</string>
+
+    <string name="action_home">Home</string>
+    <string name="action_car">Car</string>
+    <string name="action_settings">Settings</string>
+
+
+
+
+    <string name="textSignInWithGoogle">Sign In with Google</string>
+    <string name="textSignInWithFacebook">Sign In with Facebook</string>
+
+
+
+
+    <string name="textCancel">Cancel</string>
+    <string name="textSave">Save</string>
+
+    <string name="exitText">Press back button twice to exit</string>
+
+<!-- TAGS -->
+    <string name="tagSign">sign</string>
+
+<!-- ICONS FONT -->
+    <string name="font_icons">icons</string>
+    <string name="font_mainLight">Roboto-Light</string>
+
+    <string name="icon_plus">p</string>
+    <string name="icon_car_wash">c</string>
+    <string name="icon_car_service">a</string>
+    <string name="icon_car_fuel">f</string>
+    <string name="icon_road">r</string>
+    <string name="icon_vehicle">v</string>
+    <string name="icon_rearrange">q</string>
+    <string name="icon_budget">1</string>
+    <string name="icon_facebook">2</string>
+    <string name="icon_google_plus">3</string>
+    <string name="icon_arrow_right">4</string>
+
+</resources>

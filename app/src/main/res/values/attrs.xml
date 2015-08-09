@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- custome attr for fonttype -->
+    <declare-styleable name="FText">
+        <attr name="font" format="string" />
+    </declare-styleable>
+
+    <!-- custom attr for circle view -->
+    <declare-styleable name="circleView">
+        <attr name="circleColor" format="color" />
+        <attr name="borderColor" format="color" />
+        <attr name="circleLabel" format="string" />
+        <attr name="textSize" format="float" />
+        <attr name="backgroundSize" format="float" />
+    </declare-styleable>
+
+</resources>
