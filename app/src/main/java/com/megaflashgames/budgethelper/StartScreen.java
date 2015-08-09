@@ -1,19 +1,23 @@
 package com.megaflashgames.budgethelper;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.megaflashgames.budgethelper.annotations.ContentView;
 import com.megaflashgames.budgethelper.annotations.InjectView;
 import com.megaflashgames.budgethelper.ui.ScreenBase;
+import com.megaflashgames.budgethelper.util.enums.LoginStep;
 
 /**
  * Created by VanyaMihova on 8/6/2015.
@@ -23,22 +27,18 @@ public class StartScreen extends ScreenBase {
 
     private boolean isExpanded = false;
     private boolean isLocked = false;
+    private boolean isReadyToSignIn = false;
+    private LoginStep loginStep = LoginStep.USERNAME;
+    private int progressStatus = 0;
+    private String[] signInData = new String[2];
 
 
     @InjectView(R.id.generalContainer)
     private LinearLayout generalContainer;
-    @InjectView(R.id.generalSign)
-    private TextView generalSign;
-
     @InjectView(R.id.gPlusContainer)
     private LinearLayout gPlusContainer;
-    @InjectView(R.id.gPlusSign)
-    private TextView gPlusButton;
-
     @InjectView(R.id.facebookContainer)
     private LinearLayout facebookContainer;
-    @InjectView(R.id.facebookSign)
-    private TextView facebookButton;
 
     @InjectView(R.id.helperContainer)
     private LinearLayout helperContainer;
@@ -48,6 +48,20 @@ public class StartScreen extends ScreenBase {
     private TextView arrowRight;
     @InjectView(R.id.textSignIn)
     private TextView textSignIn;
+    @InjectView(R.id.editTextSignInUsername)
+    private EditText editTextSignInUsername;
+    @InjectView(R.id.editTextSignInPassword)
+    private EditText editTextSignInPassword;
+
+    @InjectView(R.id.logInContainer)
+    private RelativeLayout logInContainer;
+
+    @InjectView(R.id.loadingContainer)
+    private RelativeLayout loadingContainer;
+    @InjectView(R.id.textLoading)
+    private TextView textLoading;
+    @InjectView(R.id.progressBar)
+    private ProgressBar progressBar;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -59,6 +73,26 @@ public class StartScreen extends ScreenBase {
                     collapseItem(v.getId());
                 }
                 isExpanded = !isExpanded;
+            }
+        }
+    };
+
+    private View.OnClickListener mLoadingOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            if(v.getTag() instanceof View) {
+
+                if(((View)v.getTag()).getId() == R.id.generalContainer) {
+                    if(!isReadyToSignIn) {
+                        switchEditTexts((View) v.getTag());
+                    } else {
+                        startLoadView((View) v.getTag());
+                    }
+                } else if (((View)v.getTag()).getId() == R.id.facebookContainer ||
+                        ((View)v.getTag()).getId() == R.id.gPlusContainer) {
+                    startLoadView((View) v.getTag());
+                }
+
             }
         }
     };
@@ -118,6 +152,7 @@ public class StartScreen extends ScreenBase {
 
     private void collapseItem(int expandedItem) {
         if(expandedItem == R.id.generalContainer) {
+            isReadyToSignIn = false;
             helperContainer.startAnimation(generalContainerCollapseAnimation());
             generalContainer.startAnimation(generalSignTranslateRightAnimation());
             fadeInAnimation(0, gPlusContainer);
@@ -141,26 +176,11 @@ public class StartScreen extends ScreenBase {
         view.setBackgroundColor(0);
     }
 
-    private void updateParametersHelperContainer(View view) {
+    private void updateParametersHelperContainer() {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(helperContainer.getLayoutParams());
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         helperContainer.setLayoutParams(params);
-    }
-
-    private TextView getChildTextViewSignFromView(View view) {
-        int childCount = ((LinearLayout)view).getChildCount();
-        for(int i = 0; i < childCount; i++) {
-            View child = ((LinearLayout) view).getChildAt(i);
-            if(child instanceof TextView) {
-                if (child.getTag() instanceof String) {
-                    if (((String) child.getTag()).equalsIgnoreCase(getString(R.string.tagSign))) {
-                        return (TextView) child;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private void createHelperSignFromView(final View view) {
@@ -181,14 +201,18 @@ public class StartScreen extends ScreenBase {
         animation.setStartOffset(startOffset);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) { }
+            public void onAnimationStart(Animation animation) {
+            }
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.GONE);
                 view.setOnClickListener(null);
             }
+
             @Override
-            public void onAnimationRepeat(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
         view.startAnimation(animation);
     }
@@ -198,14 +222,18 @@ public class StartScreen extends ScreenBase {
         animation.setStartOffset(startOffset);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) { }
+            public void onAnimationStart(Animation animation) {
+            }
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.VISIBLE);
                 view.setOnClickListener(mOnClickListener);
             }
+
             @Override
-            public void onAnimationRepeat(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
         view.startAnimation(animation);
     }
@@ -220,37 +248,33 @@ public class StartScreen extends ScreenBase {
 
     private void containerCollapseAnimationStart(View view) {
         isLocked = true;
+        arrowRight.setTag(null);
+        arrowRight.setOnClickListener(null);
         arrowRight.setVisibility(View.GONE);
         behaviorForViewBeforeCollapse(view);
     }
 
     private void containerExpandAnimationEnd(View view) {
         isLocked = false;
+        arrowRight.setTag(view);
+        arrowRight.setOnClickListener(mLoadingOnClickListener);
         arrowRight.setVisibility(View.VISIBLE);
-        updateParametersHelperContainer(view);
+        updateParametersHelperContainer();
         behaviorForViewAfterExpand(view);
-//        updateHelperSignFromView(view);
     }
 
-    private void containerExpandAnimationStart(View view) {
+    private void containerExpandAnimationStart() {
         isLocked = true;
-        behaviorForViewBeforeExpand(view);
-//        creatyHelperSignFromView(view);
-    }
-
-    private void behaviorForViewBeforeExpand(View view) {
-        if(view.getId() == R.id.generalContainer) {
-            //
-        } else if (view.getId() == R.id.facebookContainer) {
-            //
-        } else if (view.getId() == R.id.gPlusContainer) {
-            //
-        }
     }
 
     private void behaviorForViewAfterExpand(View view) {
         if(view.getId() == R.id.generalContainer) {
-            //
+            if(loginStep == LoginStep.PASSWORD) {
+                if (editTextSignInPassword.getVisibility() == View.GONE)
+                    editTextSignInPassword.setVisibility(View.VISIBLE);
+            } else {
+                editTextSignInUsername.setVisibility(View.VISIBLE);
+            }
         } else if (view.getId() == R.id.facebookContainer) {
             textSignIn.setVisibility(View.VISIBLE);
             textSignIn.setText(getString(R.string.textSignInWithFacebook));
@@ -262,7 +286,8 @@ public class StartScreen extends ScreenBase {
 
     private void behaviorForViewBeforeCollapse(View view) {
         if(view.getId() == R.id.generalContainer) {
-            //
+            editTextSignInUsername.setVisibility(View.GONE);
+            editTextSignInPassword.setVisibility(View.GONE);
         } else if (view.getId() == R.id.facebookContainer) {
             textSignIn.setVisibility(View.GONE);
         } else if (view.getId() == R.id.gPlusContainer) {
@@ -270,12 +295,116 @@ public class StartScreen extends ScreenBase {
         }
     }
 
+    private void switchEditTexts(View view) {
+        if(loginStep == LoginStep.USERNAME) {
+            signInData[0] = editTextSignInUsername.getText().toString();
+            if(!TextUtils.isEmpty(signInData[0])) {
+                loginStep = LoginStep.PASSWORD;
+                editTextSignInUsername.startAnimation(edittextDisappearAnimation());
+                editTextSignInPassword.startAnimation(edittextApearAnimation());
+            } else {
+                logInContainer.startAnimation(bounceAnimation());
+            }
+        } else if(loginStep == LoginStep.PASSWORD) {
+            signInData[1] = editTextSignInPassword.getText().toString();
+            if(!TextUtils.isEmpty(signInData[1])) {
+                startLoadView(view);
+            } else {
+                logInContainer.startAnimation(bounceAnimation());
+            }
+        }
+    }
+
+    private void startLoadView(View view) {
+        fadeOutAnimation(0, logInContainer);
+        fadeInAnimation(0, loadingContainer);
+
+        setLoadingTextByView(view);
+        updateProgress();
+    }
+
+    private void updateProgress() {
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            public void run() {
+                while (progressStatus < 100) {
+                    progressStatus++;
+
+                    handler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(progressStatus);
+                        }
+                    });
+
+                    try { Thread.sleep(50); } catch (InterruptedException e) { e.printStackTrace(); }
+                }
+                Intent intent = new Intent(StartScreen.this, StartScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).start();
+    }
+
+    private void setLoadingTextByView(View view) {
+        if (view.getId() == R.id.facebookContainer) {
+            textLoading.setText(getString(R.string.textLoadingSignInWithFacebook));
+        } else if (view.getId() == R.id.gPlusContainer) {
+            textLoading.setText(getString(R.string.textLoadingSignInWithGoogle));
+        } if (view.getId() == R.id.generalContainer) {
+            textLoading.setText(getString(R.string.textLoadingSignInWithGeneral));
+        }
+    }
+
+
+    // ***************************
+    // logInContainer animations
+    private Animation bounceAnimation() {
+        return AnimationUtils.loadAnimation(this, R.anim.anim_bounce_horizontal);
+    }
+
+
+    // ***************************
+    // EditText animations
+
+    private Animation edittextDisappearAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_edittext_disappear);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                editTextSignInUsername.setVisibility(View.GONE);
+                editTextSignInUsername.clearAnimation();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
+        return animation;
+    }
+
+    private Animation edittextApearAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_edittext_appear);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                editTextSignInPassword.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
+        return animation;
+    }
+
 
     // ***************************
     // General animations
 
     private Animation generalButtonAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_general_appear);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_general_appear);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
@@ -293,11 +422,11 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation generalContainerExpandAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_general_expand);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_general_expand);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                containerExpandAnimationStart(generalContainer);
+                containerExpandAnimationStart();
             }
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -310,7 +439,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation generalContainerCollapseAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_general_collapse);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_general_collapse);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -327,7 +456,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation generalSignTranslateLeftAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_general_sign_translate_left);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_general_sign_translate_left);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) { }
@@ -343,7 +472,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation generalSignTranslateRightAnimation() {
-        return AnimationUtils.loadAnimation(this, R.anim.button_general_sign_translate_right);
+        return AnimationUtils.loadAnimation(this, R.anim.login_button_general_sign_translate_right);
     }
 
 
@@ -351,7 +480,7 @@ public class StartScreen extends ScreenBase {
     // G+ animations
 
     private Animation gPlusButtonAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_gplus_appear);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_gplus_appear);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) { }
@@ -369,11 +498,11 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation gPlusContainerExpandAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_gplus_expand);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_gplus_expand);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                containerExpandAnimationStart(gPlusContainer);
+                containerExpandAnimationStart();
             }
 
             @Override
@@ -389,7 +518,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation gPlusContainerCollapseAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_gplus_collapse);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_gplus_collapse);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -414,15 +543,15 @@ public class StartScreen extends ScreenBase {
     // facebook animations
 
     private Animation facebookAnimation() {
-        return AnimationUtils.loadAnimation(this, R.anim.button_facebook_appear);
+        return AnimationUtils.loadAnimation(this, R.anim.login_button_facebook_appear);
     }
 
     private Animation facebookContainerExpandAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_facebook_expand);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_facebook_expand);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                containerExpandAnimationStart(facebookContainer);
+                containerExpandAnimationStart();
             }
 
             @Override
@@ -437,7 +566,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation facebookContainerCollapseAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_facebook_collapse);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_facebook_collapse);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -457,7 +586,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation facebookSignTranslateLeftAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.button_facebook_sign_translate_left);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.login_button_facebook_sign_translate_left);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) { }
@@ -473,7 +602,7 @@ public class StartScreen extends ScreenBase {
     }
 
     private Animation facebookSignTranslateRightAnimation() {
-        return AnimationUtils.loadAnimation(this, R.anim.button_facebook_sign_translate_right);
+        return AnimationUtils.loadAnimation(this, R.anim.login_button_facebook_sign_translate_right);
     }
 
 

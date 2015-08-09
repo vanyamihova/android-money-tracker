@@ -39,6 +39,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/logInContainer"
         android:layout_width="match_parent"
         android:layout_height="60dip"
         android:layout_below="@id/centerView"
@@ -91,6 +92,38 @@
             android:paddingRight="15dip"
             android:visibility="gone"
             android:elevation="6dip"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            mfg:font="@string/font_mainLight"/>
+
+        <!-- USERNAME EDIT TEXT -->
+        <com.megaflashgames.budgethelper.ui.view.FEditText
+            android:id="@+id/editTextSignInUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/arrowRight"
+            android:layout_marginRight="10dip"
+            android:layout_marginLeft="45dip"
+            android:visibility="gone"
+            android:elevation="6dip"
+            android:hint="@string/textUsername"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            mfg:font="@string/font_mainLight"/>
+
+        <!-- PASSWORD EDIT TEXT -->
+        <com.megaflashgames.budgethelper.ui.view.FEditText
+            android:id="@+id/editTextSignInPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/arrowRight"
+            android:layout_marginRight="10dip"
+            android:layout_marginLeft="45dip"
+            android:visibility="gone"
+            android:elevation="6dip"
+            android:hint="@string/textPassword"
             android:textSize="15sp"
             android:textColor="@android:color/white"
             mfg:font="@string/font_mainLight"/>
@@ -161,9 +194,39 @@
                 mfg:font="@string/font_icons"/>
         </LinearLayout>
 
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_below="@id/centerView"
+        android:visibility="gone"
+        android:padding="5dip"
+        android:layout_alignLeft="@id/logoContainer"
+        android:layout_alignRight="@id/logoContainer"
+        android:background="@drawable/background_helper">
 
+        <com.megaflashgames.budgethelper.ui.view.FTextView
+            android:id="@+id/textLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dip"
+            android:text="@string/textLoadingSignInWithGeneral"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            mfg:font="@string/font_mainLight"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:layout_margin="10dip"
+            android:layout_below="@id/textLoading"
+            android:progressDrawable="@drawable/login_progress_bar"
+            android:max="100"
+            style="@android:style/Widget.ProgressBar.Horizontal"/>
 
     </RelativeLayout>
 

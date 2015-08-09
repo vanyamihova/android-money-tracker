@@ -10,24 +10,29 @@
 
     <string name="action_example">Example action</string>
 
-    <string name="textNo">No</string>
-    <string name="textYes">Yes</string>
 
+<!-- MENU -->
     <string name="action_home">Home</string>
     <string name="action_car">Car</string>
     <string name="action_settings">Settings</string>
 
 
-
+<!-- LOADING -->
+    <string name="textLoadingSignInWithGeneral">Signing</string>
+    <string name="textLoadingSignInWithGoogle">Signing with Google</string>
+    <string name="textLoadingSignInWithFacebook">Signing with Facebook</string>
 
     <string name="textSignInWithGoogle">Sign In with Google</string>
     <string name="textSignInWithFacebook">Sign In with Facebook</string>
 
-
+    <string name="textUsername">Username</string>
+    <string name="textPassword">Password</string>
 
 
     <string name="textCancel">Cancel</string>
     <string name="textSave">Save</string>
+    <string name="textNo">No</string>
+    <string name="textYes">Yes</string>
 
     <string name="exitText">Press back button twice to exit</string>
 
