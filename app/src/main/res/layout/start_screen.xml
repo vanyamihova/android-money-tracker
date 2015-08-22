@@ -69,7 +69,7 @@
             android:elevation="7dip" />
 
 
-        <com.megaflashgames.budgethelper.ui.view.FTextView
+        <com.megaflashgames.moneynotebook.ui.view.FTextView
             android:id="@+id/arrowRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:textColor="@android:color/white"
             mfg:font="@string/font_icons"/>
 
-        <com.megaflashgames.budgethelper.ui.view.FTextView
+        <com.megaflashgames.moneynotebook.ui.view.FTextView
             android:id="@+id/textSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             mfg:font="@string/font_mainLight"/>
 
         <!-- USERNAME EDIT TEXT -->
-        <com.megaflashgames.budgethelper.ui.view.FEditText
+        <com.megaflashgames.moneynotebook.ui.view.FEditText
             android:id="@+id/editTextSignInUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
             mfg:font="@string/font_mainLight"/>
 
         <!-- PASSWORD EDIT TEXT -->
-        <com.megaflashgames.budgethelper.ui.view.FEditText
+        <com.megaflashgames.moneynotebook.ui.view.FEditText
             android:id="@+id/editTextSignInPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
             android:gravity="center"
             android:elevation="5dip"
             android:background="@drawable/background_helper">
-            <com.megaflashgames.budgethelper.ui.view.FTextView
+            <com.megaflashgames.moneynotebook.ui.view.FTextView
                 android:id="@+id/gPlusSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
             android:gravity="center"
             android:elevation="5dip"
             android:background="@drawable/background_helper">
-            <com.megaflashgames.budgethelper.ui.view.FTextView
+            <com.megaflashgames.moneynotebook.ui.view.FTextView
                 android:id="@+id/generalSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
             android:gravity="center"
             android:elevation="5dip"
             android:background="@drawable/background_helper">
-            <com.megaflashgames.budgethelper.ui.view.FTextView
+            <com.megaflashgames.moneynotebook.ui.view.FTextView
                 android:id="@+id/facebookSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
         android:layout_alignRight="@id/logoContainer"
         android:background="@drawable/background_helper">
 
-        <com.megaflashgames.budgethelper.ui.view.FTextView
+        <com.megaflashgames.moneynotebook.ui.view.FTextView
             android:id="@+id/textLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

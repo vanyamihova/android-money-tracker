@@ -4,7 +4,7 @@
     android:id="@+id/container_Navigation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_1">
+    android:background="@color/background_helper">
 
     <ImageView android:id="@+id/iv_menu"
         android:layout_width="48dp"
@@ -23,7 +23,7 @@
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true">
-        <com.megaflashgames.budgethelper.ui.view.FTextView
+        <com.megaflashgames.moneynotebook.ui.view.FTextView
             android:id="@+id/tv_add_car_cost"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -33,7 +33,7 @@
             android:textColor="@android:color/white"
             android:textSize="22sp"/>
 
-        <com.megaflashgames.budgethelper.ui.view.FTextView
+        <com.megaflashgames.moneynotebook.ui.view.FTextView
             android:id="@+id/tv_rearrange"
             android:layout_width="48dp"
             android:layout_height="48dp"

@@ -6,7 +6,7 @@
     android:background="@color/colorGrey"
     android:orientation="vertical" >
 
-    <com.megaflashgames.budgethelper.ui.view.FTextView
+    <com.megaflashgames.moneynotebook.ui.view.FTextView
 		android:id="@+id/tv_textInDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 	    android:layout_height="match_parent"
 	    android:orientation="horizontal"
 	    android:weightSum="2" >
-        <com.megaflashgames.budgethelper.ui.view.FButton
+        <com.megaflashgames.moneynotebook.ui.view.FButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/white"
@@ -60,7 +60,7 @@
             mfg:font="@string/font_mainLight"
             android:layout_weight="1"/>
 
-        <com.megaflashgames.budgethelper.ui.view.FButton
+        <com.megaflashgames.moneynotebook.ui.view.FButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/white"

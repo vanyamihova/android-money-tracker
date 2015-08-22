@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BudgetHelper</string>
+    <string name="app_name">Money Notebook</string>
     
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -54,5 +54,8 @@
     <string name="icon_facebook">2</string>
     <string name="icon_google_plus">3</string>
     <string name="icon_arrow_right">4</string>
+    <string name="icon_car">5</string>
+    <string name="icon_home">6</string>
+    <string name="icon_settings">7</string>
 
 </resources>

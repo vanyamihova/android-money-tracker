@@ -7,7 +7,7 @@
 
     <color name="color_menu_item_border">#2c2c2c</color>
     <color name="color_menu_background">#454545</color>
-    <color name="color_menu_text_color">#b52c2c2c</color>
+    <color name="color_menu_text_color">#dcffffff</color>
 
     <!-- RAINBOW -->
     <color name="color_1">#f5b754</color>
