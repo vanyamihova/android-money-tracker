@@ -8,10 +8,9 @@ import com.megaflashgames.moneynotebook.R;
 import com.megaflashgames.moneynotebook.annotations.ContentView;
 import com.megaflashgames.moneynotebook.annotations.InjectView;
 import com.megaflashgames.moneynotebook.db.DatabaseService;
-import com.megaflashgames.moneynotebook.model.Home;
-import com.megaflashgames.moneynotebook.ui.adapter.TravelExpensesAdapter;
-import com.megaflashgames.moneynotebook.ui.dialog.BaseDialog;
-import com.megaflashgames.moneynotebook.ui.dialog.DialogAddCarCost;
+import com.megaflashgames.moneynotebook.db.model.Home;
+import com.megaflashgames.moneynotebook.ui.adapter.CarAdapter;
+import com.megaflashgames.moneynotebook.ui.model.ScreenSettings;
 
 import java.util.List;
 
@@ -21,9 +20,10 @@ import java.util.List;
 @ContentView(R.layout.fragment_home)
 public class FragmentHome extends FragmentBase {
 
+    public static final ScreenSettings MENU_TAG = ScreenSettings.HOME;
     public static final String FRAGMENT_TAG = FragmentHome.class.getSimpleName();
 
-    private TravelExpensesAdapter mAdapter;
+    private CarAdapter mAdapter;
     private List<Home> mAllHomes;
 
     @InjectView(R.id.lv_homeExpensesList)
@@ -45,8 +45,8 @@ public class FragmentHome extends FragmentBase {
 
 //        mAllCarCosts = DatabaseService.GetInstance().getAllCosts();
 //
-//        mAdapter = new TravelExpensesAdapter(getActivity(), getActivity().getLayoutInflater(), mAllCarCosts);
-//        mAdapter.setOnAdapterListener(new TravelExpensesAdapter.OnAdapterListener() {
+//        mAdapter = new CarAdapterOld(getActivity(), getActivity().getLayoutInflater(), mAllCarCosts);
+//        mAdapter.setOnAdapterListener(new CarAdapterOld.OnAdapterListener() {
 //            @Override
 //            public void onDialogClosed(boolean cancellation) {
 //                if(!cancellation) {
@@ -66,27 +66,27 @@ public class FragmentHome extends FragmentBase {
     }
 
     private void setNavigationInRight() {
-        mNavigation = this.getFragmentNavigation();
-        mNavigation.createRearrange();
+//        mNavigation = this.getFragmentNavigation();
+//        mNavigation.createRearrange();
 //        mNavigation.createAddButton();
 //        mNavigation.setOnAddButtonListener(new AddButtonAction());
     }
 
 
-    private class AddButtonAction implements FragmentNavigation.OnAddButtonListener {
-        @Override
-        public void onClickAddButton() {
-            DialogAddCarCost dialog = DialogAddCarCost.dialogInstance(getActivity());
-            dialog.setBaseDialogListener(new BaseDialog.BaseDialogListener() {
-                @Override
-                public void onDialogClosed(boolean cancellation) {
-                    if (!cancellation) {
-                        resetListItems();
-                    }
-                }
-            });
-        }
-    }
+//    private class AddButtonAction implements FragmentNavigation.OnAddButtonListener {
+//        @Override
+//        public void onClickAddButton() {
+//            DialogAddCarCost dialog = DialogAddCarCost.dialogInstance(getActivity());
+//            dialog.setBaseDialogListener(new BaseDialog.BaseDialogListener() {
+//                @Override
+//                public void onDialogClosed(boolean cancellation) {
+//                    if (!cancellation) {
+//                        resetListItems();
+//                    }
+//                }
+//            });
+//        }
+//    }
 
 
 }

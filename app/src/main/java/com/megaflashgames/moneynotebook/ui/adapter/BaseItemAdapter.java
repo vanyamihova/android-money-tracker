@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.megaflashgames.moneynotebook.ui.ViewHolder;
-import com.megaflashgames.moneynotebook.ui.injector.MFGInjector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +70,6 @@ abstract public class BaseItemAdapter<T> extends BaseAdapter {
         if(convertView == null) {
             holder = newViewHolder();
 
-            convertView = MFGInjector.inflate(this, inflater,parent,holder);
-            convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

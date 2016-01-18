@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.megaflashgames.moneynotebook.R;
-import com.megaflashgames.moneynotebook.model.Car;
+import com.megaflashgames.moneynotebook.db.model.Car;
 import com.megaflashgames.moneynotebook.ui.fragments.FragmentBase;
 
 public abstract class BaseDialog {
@@ -43,7 +43,7 @@ public abstract class BaseDialog {
 
 
 	// Delegate
-	private FragmentBase.OnFragmentAction mOnFragmentActionDelegate;
+//	private FragmentBase.OnFragmentAction mOnFragmentActionDelegate;
 
 
 
@@ -145,19 +145,19 @@ public abstract class BaseDialog {
 	}
 	
 	
-	public void setOnFragmentActionDelegate(FragmentBase.OnFragmentAction delegate) {
-		this.mOnFragmentActionDelegate = delegate;
-	}
-	
-	protected void notifyDisplayFragment(String fragmentTag, boolean addToBackStack, Object... data) {
-		if(mOnFragmentActionDelegate != null) {
-			mOnFragmentActionDelegate.onDisplayFragment(fragmentTag, addToBackStack, data);
-		}
-	}
-	
-	protected FragmentBase.OnFragmentAction getOnFragmentAction() {
-		return mOnFragmentActionDelegate;
-	}
+//	public void setOnFragmentActionDelegate(FragmentBase.OnFragmentAction delegate) {
+//		this.mOnFragmentActionDelegate = delegate;
+//	}
+//
+//	protected void notifyDisplayFragment(String fragmentTag, boolean addToBackStack, Object... data) {
+//		if(mOnFragmentActionDelegate != null) {
+//			mOnFragmentActionDelegate.onDisplayFragment(fragmentTag, addToBackStack, data);
+//		}
+//	}
+//
+//	protected FragmentBase.OnFragmentAction getOnFragmentAction() {
+//		return mOnFragmentActionDelegate;
+//	}
 	
 	abstract protected boolean showSoftKeybord();
 	

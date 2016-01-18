@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mfg="http://schemas.android.com/apk/res/android"
+    xmlns:mfg="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,31 +13,10 @@
 
         <!-- The navigation drawer -->
 
-        <RelativeLayout
+        <com.megaflashgames.moneynotebook.ui.custom.SlidingMenu
+            android:id="@+id/sliding_menu"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="@color/background_helper"
-            >
-
-            <ImageView
-                android:id="@+id/imageAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="104dp"
-                android:background="@android:color/black"
-                android:scaleType="centerInside"
-                android:src="@drawable/avatar"/>
-
-            <ListView
-                android:id="@+id/listview_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/imageAvatar"
-                android:paddingTop="10dip"
-                android:background="@android:color/transparent"
-                android:choiceMode="singleChoice"
-                style="@style/style_list" />
-
-        </RelativeLayout>
+            android:layout_height="match_parent" />
 
 
         <!-- The Root Layout -->
@@ -47,16 +26,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <!-- Navigation Layout -->
-
-            <FrameLayout
-                android:id="@+id/fragment_navigation"
+            <!-- TOOLBAR -->
+            <com.megaflashgames.moneynotebook.ui.custom.CustomToolbar
+                android:id="@+id/custom_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </FrameLayout>
+                android:layout_height="wrap_content" />
 
             <!-- Fragment Content -->
-
             <FrameLayout
                 android:id="@+id/fragment_content"
                 android:background="@android:color/white"

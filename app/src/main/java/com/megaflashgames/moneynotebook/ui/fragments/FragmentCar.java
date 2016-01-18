@@ -1,36 +1,44 @@
 package com.megaflashgames.moneynotebook.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.megaflashgames.moneynotebook.R;
-import com.megaflashgames.moneynotebook.annotations.ContentView;
-import com.megaflashgames.moneynotebook.annotations.InjectView;
 import com.megaflashgames.moneynotebook.db.DatabaseService;
-import com.megaflashgames.moneynotebook.model.Car;
-import com.megaflashgames.moneynotebook.ui.adapter.TravelExpensesAdapter;
+import com.megaflashgames.moneynotebook.db.model.Car;
+import com.megaflashgames.moneynotebook.ui.adapter.CarAdapter;
+import com.megaflashgames.moneynotebook.ui.custom.CustomToolbar;
 import com.megaflashgames.moneynotebook.ui.dialog.BaseDialog;
 import com.megaflashgames.moneynotebook.ui.dialog.DialogAddCarCost;
+import com.megaflashgames.moneynotebook.ui.model.ScreenSettings;
+import com.megaflashgames.moneynotebook.util.enums.CarSpendType;
 
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
- * Created by vanyamihova on 05/05/2015.
+ * Created by Vanya Mihova on 11/21/2015.
  */
-@ContentView(R.layout.fragment_car)
 public class FragmentCar extends FragmentBase {
 
+    public static final ScreenSettings MENU_TAG = ScreenSettings.CAR;
     public static final String FRAGMENT_TAG = FragmentCar.class.getSimpleName();
 
-    private TravelExpensesAdapter mAdapter;
-
-
     private List<Car> mAllCars;
+    private CarAdapter mAdapter;
 
-    @InjectView(R.id.lv_travelExpensesList)
-    ListView mTravelExpensesList;
+    @Bind(R.id.list_travelExpensesList)RecyclerView mList;
+
 
     public static FragmentBase newInstance() {
         FragmentBase fragment = new FragmentCar();
@@ -38,55 +46,44 @@ public class FragmentCar extends FragmentBase {
         return fragment;
     }
 
-    @Override
-    public void onViewCreated(View container, Bundle savedInstanceState) {
-        super.onViewCreated(container, savedInstanceState);
 
-        setNavigationInRight();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_car, container, false);
+        ButterKnife.bind(this, view);
 
         mAllCars = DatabaseService.GetInstance().getAllCars();
         Collections.reverse(mAllCars);
 
-        mAdapter = new TravelExpensesAdapter(getActivity(), getActivity().getLayoutInflater(), mAllCars);
-        mAdapter.setOnAdapterListener(new TravelExpensesAdapter.OnAdapterListener() {
-            @Override
-            public void onDialogClosed(boolean cancellation) {
-                if(!cancellation) {
-                    resetListItems();
-                }
-            }
-        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new CarAdapter(mAllCars);
 
-        mTravelExpensesList.setAdapter(mAdapter);
+        mList.setHasFixedSize(true);
+        mList.setLayoutManager(layoutManager);
+        mList.setAdapter(mAdapter);
+
+        return view;
     }
 
-    private void setNavigationInRight() {
-        mNavigation = this.getFragmentNavigation();
-        mNavigation.createRearrange();
-        mNavigation.createAddButton();
-        mNavigation.setOnAddButtonListener(new FragmentNavigation.OnAddButtonListener() {
+
+    @Override
+    protected void customizeToolbar(CustomToolbar toolbar) {
+        super.customizeToolbar(toolbar);
+        toolbar.setOnAddButtonClickListener(new CustomToolbar.OnAddButtonClickListener() {
             @Override
-            public void onClickAddButton() {
+            public void onAddClickListener() {
                 DialogAddCarCost dialog = DialogAddCarCost.dialogInstance(getActivity());
                 dialog.setBaseDialogListener(new BaseDialog.BaseDialogListener() {
                     @Override
                     public void onDialogClosed(boolean cancellation) {
                         if (!cancellation) {
-                            resetListItems();
+                            Toast.makeText(getActivity(), "Add to FragmentCar", Toast.LENGTH_SHORT).show();
+                            //resetListItems();
                         }
                     }
                 });
             }
         });
     }
-
-    private void resetListItems() {
-        if(mAdapter != null) {
-            mAllCars = DatabaseService.GetInstance().getAllCars();
-            Collections.reverse(mAllCars);
-            mAdapter.setItems(mAllCars);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-
 }

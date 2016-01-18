@@ -7,9 +7,10 @@ import android.widget.Spinner;
 
 import com.megaflashgames.moneynotebook.R;
 import com.megaflashgames.moneynotebook.db.DatabaseService;
-import com.megaflashgames.moneynotebook.model.Car;
+import com.megaflashgames.moneynotebook.db.model.Car;
 import com.megaflashgames.moneynotebook.ui.adapter.CustomSpinnerAdapter;
 import com.megaflashgames.moneynotebook.util.DateAndTimeUtil;
+import com.megaflashgames.moneynotebook.util.enums.CarSpendType;
 
 import java.util.Arrays;
 
@@ -66,27 +67,27 @@ public class DialogAddCarCost extends BaseDialog {
     protected void actionOnActionButton() {
         if(!editText.getText().toString().isEmpty()) {
 
-            mCar.setTotal(Integer.parseInt(editText.getText().toString()));
-            mCar.setCrateAt(DateAndTimeUtil.GetInstance().setTimestamp(editTextDate.getText().toString()));
-            mCar.setModifyAt(DateAndTimeUtil.GetInstance().setTimestamp(editTextDate.getText().toString()));
+            mCar.total = Integer.parseInt(editText.getText().toString());
+            mCar.crateAt = DateAndTimeUtil.GetInstance().setTimestamp(editTextDate.getText().toString());
+            mCar.modifyAt = DateAndTimeUtil.GetInstance().setTimestamp(editTextDate.getText().toString());
 
             if(!editTextKilometers.getText().toString().isEmpty())
-                mCar.setKilometers(Integer.parseInt(editTextKilometers.getText().toString()));
+                mCar.kilometers = Integer.parseInt(editTextKilometers.getText().toString());
 
-            DatabaseService.GetInstance().saveMainObject(mCar);
+            mCar.saveData();
         }
     }
 
     @Override
     protected void setAdditionalSource() {
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, Arrays.asList(Car.Type.values()));
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, Arrays.asList(CarSpendType.values()));
         Spinner spinner = (Spinner) dialog.findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Car.Type type = Arrays.asList(Car.Type.values()).get(position);
-                mCar.setType(type);
+                CarSpendType type = Arrays.asList(CarSpendType.values()).get(position);
+                mCar.type = type;
 
                 if (!type.isNeedKilometers()) {
                     editTextKilometers.setVisibility(View.INVISIBLE);

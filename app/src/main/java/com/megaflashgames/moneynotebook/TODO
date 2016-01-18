@@ -3,6 +3,10 @@
 
  - LOGIN SCREEN - when click on arrow to log in -> clickListener == null!!!
 
+ - OPEN / CLOSE main menu - add animation
+
+ - close main menu after click on profile
+
 
 
 

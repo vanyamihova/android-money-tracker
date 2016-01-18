@@ -1,140 +1,124 @@
 package com.megaflashgames.moneynotebook.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.megaflashgames.moneynotebook.R;
 import com.megaflashgames.moneynotebook.annotations.ContentView;
-import com.megaflashgames.moneynotebook.annotations.InjectView;
-import com.megaflashgames.moneynotebook.ui.adapter.SlidingMenuAdapter;
+import com.megaflashgames.moneynotebook.ui.custom.CustomToolbar;
+import com.megaflashgames.moneynotebook.ui.custom.SlidingMenu;
 import com.megaflashgames.moneynotebook.ui.fragments.FragmentBase;
-import com.megaflashgames.moneynotebook.ui.fragments.FragmentHome;
-import com.megaflashgames.moneynotebook.ui.fragments.FragmentNavigation;
 import com.megaflashgames.moneynotebook.ui.fragments.FragmentCar;
+import com.megaflashgames.moneynotebook.ui.fragments.FragmentHome;
+import com.megaflashgames.moneynotebook.ui.fragments.FragmentProfile;
 import com.megaflashgames.moneynotebook.ui.fragments.FragmentSettings;
-import com.megaflashgames.moneynotebook.ui.model.MenuItem;
+import com.megaflashgames.moneynotebook.ui.fragments.FragmentTest;
+import com.megaflashgames.moneynotebook.ui.model.ScreenSettings;
 
-import java.util.Arrays;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by vanyamihova on 04/05/2015.
  */
 @ContentView(R.layout.screen_dashboard)
-public class ScreenDashboard extends ScreenBase implements FragmentNavigation.OnFragmentNavigationListener {
+public class ScreenDashboard extends AppCompatActivity {
 
-    private static final MenuItem FIRST_OPENED_FRAGMENT = MenuItem.CAR;
+    private static final ScreenSettings FIRST_OPENED_FRAGMENT = ScreenSettings.CAR;
 
     private static final String TAG = ScreenDashboard.class.getSimpleName();
 
-    @InjectView(R.id.layout_drawer)
-    private SlidingPaneLayout mSlidingPanel;
+    @Bind(R.id.layout_drawer)
+    SlidingPaneLayout mSlidingPanel;
+    @Bind(R.id.custom_toolbar)
+    CustomToolbar toolbar;
+    @Bind(R.id.sliding_menu)
+    SlidingMenu slidingMenu;
 
-    @InjectView(R.id.listview_menu)
-    private ListView mListMenu;
 
-    // Fragments
-    private FragmentBase mCurrentFragment;
-    private FragmentNavigation mNavigation;
+    private static FragmentManager sFragmentManager;
+    private static CustomToolbar sCustomToolbar;
 
-    // Adapters
-    private SlidingMenuAdapter mSlidingMenuAdapter;
-
-    private AdapterView.OnItemClickListener mOnMenuItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            onMenuItemClick((MenuItem) parent.getItemAtPosition(position));
-            closeSlidingMenu();
-        }
-    };
-
-    private FragmentBase.OnFragmentAction mOnFragmentAction = new FragmentBase.OnFragmentAction() {
-        @Override
-        public void onDisplayFragment(String fragmentTag, boolean addToBackStack, Object... data) {
-            displayFragment(fragmentTag,addToBackStack,data);
-        }
-        @Override
-        public void onFragmentVisibilityChange(FragmentBase fragment, boolean goToVisible) { }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        enableInjector(true);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.screen_dashboard);
+        ButterKnife.bind(this);
 
-        // Add navigations
-        mNavigation = FragmentNavigation.newInstance();
-        mNavigation.setOnFragmentNavigationListener(this);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_navigation, mNavigation, FragmentNavigation.FRAGMENT_TAG).commit();
-        // Add sliding menu
-        mSlidingMenuAdapter = new SlidingMenuAdapter(this, getLayoutInflater(), Arrays.asList(MenuItem.values()));
-        mListMenu.setAdapter(mSlidingMenuAdapter);
-        mListMenu.setOnItemClickListener(mOnMenuItemClickListener);
+        sFragmentManager = getSupportFragmentManager();
+        sCustomToolbar = toolbar;
 
-//        // exit
-//        mHandler = new Handler(Looper.getMainLooper());
-//        mExitToast = Toast.makeText(this, getString(R.string.exitText), Toast.LENGTH_SHORT);
+        setActionBar();
 
-        onMenuItemClick(FIRST_OPENED_FRAGMENT);
+        setSlidingMenu();
+
+        displayFragment(FragmentHome.MENU_TAG, false);
+
     }
 
-    private void onMenuItemClick(MenuItem item) {
-        switch(item) {
-            case SETTINGS:
-                displayFragment(FragmentSettings.FRAGMENT_TAG, false);
+    private void setActionBar() {
+        toolbar.setOnMenuButtonClickListener(new CustomToolbar.OnMenuButtonClickListener() {
+            @Override
+            public void onMenuClickListener() {
+                toggleSlidingMenu();
+            }
+        });
+        setSupportActionBar(toolbar);
+    }
+
+    private void setSlidingMenu() {
+        slidingMenu.setActivityDelegate(this);
+
+    }
+
+
+
+    public static void displayFragment(ScreenSettings item, boolean addToBackStack) {
+        FragmentBase fragment;
+
+        switch (item) {
+            case PROFILE:
+                fragment = FragmentProfile.newInstance();
+                break;
+            case HOME: default:
+                fragment = FragmentHome.newInstance();
                 break;
             case CAR:
-                displayFragment(FragmentCar.FRAGMENT_TAG, false);
+                fragment = FragmentCar.newInstance();
                 break;
-            case HOME:
-                displayFragment(FragmentHome.FRAGMENT_TAG, false);
+            case SETTINGS:
+                fragment = FragmentSettings.newInstance();
+                break;
+            case TEST:
+                fragment = FragmentTest.newInstance();
                 break;
         }
+
+        if(sCustomToolbar != null)
+            fragment.setCustomToolbar(sCustomToolbar);
+
+        sFragmentManager.beginTransaction()
+                .replace(R.id.fragment_content, fragment)
+                .commit();
     }
 
-    protected boolean isSlidingMenuOpen() {
-        return mSlidingPanel.isOpen();
-    }
 
     protected  void openSlidingMenu() { mSlidingPanel.openPane(); }
 
     protected void closeSlidingMenu() { mSlidingPanel.closePane(); }
 
     public void toggleSlidingMenu() {
-        if(isSlidingMenuOpen()) {
+        if(mSlidingPanel.isOpen()) {
             closeSlidingMenu();
         } else {
             openSlidingMenu();
         }
     }
 
-    @Override
-    protected FragmentBase onNewFragment(FragmentBase fragment, String fragmentTag, Object... data) {
-        if(fragment == null) {
-            if (fragmentTag.equalsIgnoreCase(FragmentSettings.FRAGMENT_TAG)) {
-                fragment = FragmentSettings.newInstance();
-            } else if (fragmentTag.equalsIgnoreCase(FragmentCar.FRAGMENT_TAG)) {
-                fragment = FragmentCar.newInstance();
-            } else if (fragmentTag.equalsIgnoreCase(FragmentHome.FRAGMENT_TAG)) {
-                fragment = FragmentHome.newInstance();
-            }
-            fragment.setFragmentNavigation(mNavigation);
-        }
-
-        mCurrentFragment = fragment;
-        return mCurrentFragment;
-    }
-
-    @Override
-    protected FragmentBase.OnFragmentAction onFragmentAction() { return mOnFragmentAction; }
-
-
-    @Override
-    public void onSlidingMenuToggle() {
-        toggleSlidingMenu();
-    }
 
 
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.megaflashgames.moneynotebook.R;
 import com.megaflashgames.moneynotebook.annotations.InjectView;
 import com.megaflashgames.moneynotebook.annotations.RowView;
-import com.megaflashgames.moneynotebook.model.Home;
+import com.megaflashgames.moneynotebook.db.model.Home;
 import com.megaflashgames.moneynotebook.ui.ViewHolder;
 
 import java.util.List;

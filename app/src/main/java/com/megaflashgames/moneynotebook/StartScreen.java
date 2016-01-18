@@ -3,6 +3,7 @@ package com.megaflashgames.moneynotebook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.megaflashgames.moneynotebook.annotations.ContentView;
-import com.megaflashgames.moneynotebook.annotations.InjectView;
-import com.megaflashgames.moneynotebook.ui.ScreenBase;
 import com.megaflashgames.moneynotebook.ui.ScreenDashboard;
 import com.megaflashgames.moneynotebook.util.enums.LoginStep;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by VanyaMihova on 8/6/2015.
  */
-@ContentView(R.layout.start_screen)
-public class StartScreen extends ScreenBase {
+public class StartScreen extends AppCompatActivity {
 
     private boolean isExpanded = false;
     private boolean isLocked = false;
@@ -34,35 +34,35 @@ public class StartScreen extends ScreenBase {
     private String[] signInData = new String[2];
 
 
-    @InjectView(R.id.generalContainer)
-    private LinearLayout generalContainer;
-    @InjectView(R.id.gPlusContainer)
-    private LinearLayout gPlusContainer;
-    @InjectView(R.id.facebookContainer)
-    private LinearLayout facebookContainer;
+    @Bind(R.id.generalContainer)
+    LinearLayout generalContainer;
+    @Bind(R.id.gPlusContainer)
+    LinearLayout gPlusContainer;
+    @Bind(R.id.facebookContainer)
+    LinearLayout facebookContainer;
 
-    @InjectView(R.id.helperContainer)
-    private LinearLayout helperContainer;
-    @InjectView(R.id.helperSignContainer)
-    private LinearLayout helperSignContainer;
-    @InjectView(R.id.arrowRight)
-    private TextView arrowRight;
-    @InjectView(R.id.textSignIn)
-    private TextView textSignIn;
-    @InjectView(R.id.editTextSignInUsername)
-    private EditText editTextSignInUsername;
-    @InjectView(R.id.editTextSignInPassword)
-    private EditText editTextSignInPassword;
+    @Bind(R.id.helperContainer)
+    LinearLayout helperContainer;
+    @Bind(R.id.helperSignContainer)
+    LinearLayout helperSignContainer;
+    @Bind(R.id.arrowRight)
+    TextView arrowRight;
+    @Bind(R.id.textSignIn)
+    TextView textSignIn;
+    @Bind(R.id.editTextSignInUsername)
+    EditText editTextSignInUsername;
+    @Bind(R.id.editTextSignInPassword)
+    EditText editTextSignInPassword;
 
-    @InjectView(R.id.logInContainer)
-    private RelativeLayout logInContainer;
+    @Bind(R.id.logInContainer)
+    RelativeLayout logInContainer;
 
-    @InjectView(R.id.loadingContainer)
-    private RelativeLayout loadingContainer;
-    @InjectView(R.id.textLoading)
-    private TextView textLoading;
-    @InjectView(R.id.progressBar)
-    private ProgressBar progressBar;
+    @Bind(R.id.loadingContainer)
+    RelativeLayout loadingContainer;
+    @Bind(R.id.textLoading)
+    TextView textLoading;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -100,8 +100,9 @@ public class StartScreen extends ScreenBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        enableInjector(true);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.start_screen);
+        ButterKnife.bind(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -109,8 +110,6 @@ public class StartScreen extends ScreenBase {
                 startAnimations();
             }
         }, 2000);
-
-
     }
 
     private void startAnimations() {
@@ -341,6 +340,7 @@ public class StartScreen extends ScreenBase {
                 }
                 Intent intent = new Intent(StartScreen.this, ScreenDashboard.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         }).start();

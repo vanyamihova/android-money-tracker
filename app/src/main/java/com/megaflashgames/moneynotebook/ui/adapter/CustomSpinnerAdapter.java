@@ -8,7 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.megaflashgames.moneynotebook.R;
-import com.megaflashgames.moneynotebook.model.Car;
+import com.megaflashgames.moneynotebook.db.model.Car;
+import com.megaflashgames.moneynotebook.util.enums.CarSpendType;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     private Context mContext;
-    private List<Car.Type> mObjects;
+    private List<CarSpendType> mObjects;
 
     private LayoutInflater inflater;
 
@@ -44,7 +45,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     private View getCustomRowView(int position, View convertView, ViewGroup parent) {
         View row = inflater.inflate(R.layout.custom_spinner_row, parent, false);
 
-        Car.Type model = mObjects.get(position);
+        CarSpendType model = mObjects.get(position);
 
         TextView label = (TextView) row.findViewById(R.id.company);
         TextView companyLogo = (TextView) row.findViewById(R.id.image);
